@@ -1,0 +1,29 @@
+Both drafts are ready to post. I graded `claim.md` and `repro.md` against the installed repro-check rubric, scope and voice guide, and the live issue #73.
+
+The issue is in scope (`codepath/pathreview-ai301-fa26-s3`). Two classmates have already posted claims, and one has posted a repro. Under the house rules that doesn't block you, and you should still post your own. Your repro is separate work from your own fork, commit and environment.
+
+- **env-recorded: pass.** The report names "Bluefin 44.20260825 (Fedora Silverblue, x86_64); GNU Bash 5.3.9; Git 2.55.0; GNU grep 3.12", the fork, and the commit hash.
+- **steps-followable: pass.** The steps start from `git clone`, check out a pinned commit, run `cp .env.example .env`, then run the greps. All of it is public and a stranger can follow it. The fork has to be public, which I did not check.
+- **evidence-present: pass.** The report shows real grep output with line numbers, plus the `grep` exit-1 fallback line.
+- **behavior-match: pass.** Issue #73 says the README asks for `OPENROUTER_API_KEY` while `.env.example` lists only mock/openai. Your output shows `README.md:24`, `.env.example:17-19` and `core/config.py:20`, which is that mismatch. The Limits section keeps the claim to the file mismatch.
+- **claim-specific: pass.** The claim names the files to compare and promises no fix, deadline or ownership. It also says it will report a failure to reproduce.
+- **ai-disclosure: pass.** `docs/CONTRIBUTING.md` (189 lines) has no AI-disclosure requirement. Your comments disclose AI use anyway.
+
+**Voice guide.** No rule is broken. You state what you observed with no root-cause claim, make no promises, and scope the claim to the file comparison ("not a runtime crash"). Two small notes:
+- The repro's output shows `$ git rev-parse HEAD`, but that command isn't in the steps block. Add it so the artifact matches the steps. The guide says to avoid paraphrased output.
+- The AI line in `claim.md` is vague ("using AI assistance"). It's not required here, but naming the tool, as `repro.md` does, matches your own disclosure habit.
+
+```json
+{
+  "item": "https://github.com/codepath/pathreview-ai301-fa26-s3/issues/73",
+  "checks": [
+    {"name": "env-recorded", "grade": "pass", "evidence": "Bluefin 44.20260825 (Fedora Silverblue, x86_64); GNU Bash 5.3.9; Git 2.55.0; GNU grep 3.12; commit 2f4e82f"},
+    {"name": "steps-followable", "grade": "pass", "evidence": "git clone of public fork, pinned checkout, cp .env.example .env, grep commands; no private resources"},
+    {"name": "evidence-present", "grade": "pass", "evidence": "Verbatim grep output with README.md:24, .env.example:17-19, core/config.py:20 and the grep exit-1 line"},
+    {"name": "behavior-match", "grade": "pass", "evidence": "README.md:24 asks for OPENROUTER_API_KEY; .env.example lists only mock/openai and OPENAI_API_KEY, matching the issue; scope limited to file mismatch"},
+    {"name": "claim-specific", "grade": "pass", "evidence": "Names README, .env.example, core/config.py to compare; no fix promise, deadline or ownership; says it will report non-reproduction"},
+    {"name": "ai-disclosure", "grade": "pass", "evidence": "docs/CONTRIBUTING.md has no AI disclosure requirement; both comments disclose AI use anyway"}
+  ],
+  "verdict": "accept"
+}
+```

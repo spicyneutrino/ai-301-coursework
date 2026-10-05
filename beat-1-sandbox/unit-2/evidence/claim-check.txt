@@ -1,0 +1,30 @@
+Checking the issue and repo policy turned up nothing that needs a disclosure; here's the grade for your claim-only draft.
+
+**Scope:** #73 is in `codepath/pathreview-ai301-fa26-s3`, so it's in scope. This is a claim-only draft, so I graded only the checks whose evidence is the claim comment or the repo's conventions.
+
+- **claim-specific: pass.** The draft names what you'll do: compare `README.md` against `.env.example` and `core/config.py`. It matches the issue's actual bug (`OPENROUTER_API_KEY` vs `OPENAI_API_KEY`, and the `mock`/`openai` options). It makes no fix promise, deadline or ownership claim. It also commits to reporting a failure to reproduce.
+- **ai-disclosure: pass.** I found no AI disclosure requirement in `docs/CONTRIBUTING.md` or the PR template, and the repo has no `AI_POLICY.md`. Your draft discloses AI use anyway, which is allowed.
+- **env-recorded, steps-followable, evidence-present, behavior-match:** `unclear`, not yet applicable (claim-only draft). They are left out of the verdict.
+
+**Voice guide:** no rule is broken.
+- **No outcome promises:** you promise only to report back, not a fix or a date.
+- **No root-cause claims:** the draft asserts none.
+- **No "confirmed":** there's no reproduction claim without an artifact.
+- **Environment rule:** it applies only to comments that report a result, and this one doesn't.
+
+**Optional:** your plan to "clone my fork" is fine. Remember the final repro comment must carry the OS, version and commit.
+
+```json
+{
+  "item": "https://github.com/codepath/pathreview-ai301-fa26-s3/issues/73",
+  "checks": [
+    {"name": "env-recorded", "grade": "unclear", "evidence": "not yet applicable: claim-only draft"},
+    {"name": "steps-followable", "grade": "unclear", "evidence": "not yet applicable: claim-only draft"},
+    {"name": "evidence-present", "grade": "unclear", "evidence": "not yet applicable: claim-only draft"},
+    {"name": "behavior-match", "grade": "unclear", "evidence": "not yet applicable: claim-only draft"},
+    {"name": "claim-specific", "grade": "pass", "evidence": "Names comparing README OPENROUTER_API_KEY vs .env.example vs core/config.py, matching issue #73; no fix promise, deadline, or ownership claim"},
+    {"name": "ai-disclosure", "grade": "pass", "evidence": "No AI disclosure requirement in docs/CONTRIBUTING.md or PR template; draft says 'I'm using AI assistance to draft and check the comments' anyway"}
+  ],
+  "verdict": "accept"
+}
+```

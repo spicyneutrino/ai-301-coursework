@@ -1,0 +1,16 @@
+# Rubric: is this reproduction package ready to post?
+
+## Checks
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+| env-recorded | The repro report's environment record: a dedicated "Environment:" label, a table of component versions, or the opening paragraph of the report listing OS and versions | At least one OS and at least one version of the primary tool are named. Fails if no environment section exists, or if neither an OS nor any version is stated (e.g., "my machine" or "latest" without specifics is not sufficient). | required |
+| steps-followable | The repro report's steps section: numbered steps, code blocks with shell commands, or procedural prose leading to the observed behavior | Every command or action needed to arrive at the observed behavior is present, starting from a described state, using only publicly accessible files and configurations. Fails if a required file, configuration, or context is private or inaccessible to a stranger, or if a key triggering step is absent. | required |
+| evidence-present | The repro report's output or artifact section: code blocks containing command output, log excerpts, terminal captures, console messages, or playground output | At least one concrete artifact — command output, log line, terminal capture, or playground result — is shown from an actual run attempt. Fails if the report consists entirely of assertions about what happened, with no shown artifact from a real run. | required |
+| behavior-match | The artifact in the repro report's output section, read against the issue's described behavior (error message, exit code, symptom) in the issue section | The artifact shows the same observable failure the issue describes — same error type, same exit code, same symptom — or the report explicitly states it could not reproduce and names the specific environmental condition that differed. Fails if: (a) the artifact shows a different error or symptom than the issue describes without explanation; (b) the repro silently uses a substantially different version, command, or syntax than what the issue targets without noting the deviation; or (c) the text asserts reproduction while the shown artifact shows a different failure. | required |
+| claim-specific | The claim comment text | The comment names what was specifically reproduced, observed, or will be investigated, without promising a fix, a deadline, or a guaranteed outcome not yet delivered. Fails if the comment is a me-too reaction with no investigative intent, or if it promises a future fix, claims exclusive ownership with a deadline, or asserts certainty of reproduction backed by no artifact in the package. | required |
+| ai-disclosure | The contribution policy section of the repo-facts block, read against both the claim comment and the repro report | If the repo's stated policy requires disclosure of AI assistance in issue comments (naming the tool and extent of use), the comments must include that disclosure. Passes if the policy has no AI disclosure requirement, permits AI without requiring disclosure, or the comments explicitly name the AI tool used and the extent of assistance. Fails if the policy requires disclosure and neither comment discloses AI use. | required |
+
+## Verdict rule
+
+Accept if every required check passes. Reject if any required check fails. `unclear` counts as fail.

@@ -1,0 +1,856 @@
+{
+  "rubric": "/var/home/oak/.claude/skills/repro-check/rubric.md",
+  "evidence": "/var/home/oak/.claude/skills/repro-check/references/evidence-guide.md",
+  "model": "sonnet",
+  "agreement": [
+    20,
+    20
+  ],
+  "results": [
+    {
+      "id": "pkg-01",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: HTTPie 3.2.4 (pip), Python 3.12.4, multidict 6.6.0, macOS 14.5 (arm64)"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Exact command `http --offline post pie.dev/post 'header1: xyz' x=1` with one custom header; only public resources; control run included"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Verbatim terminal output shown for both the single-header run and the no-header control run"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Artifact shows request with header1 and no Content-Type: application/json, matching the issue's step-1 output; control shows header present"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Claim names the missing Content-Type with one custom header on 3.2.4 and a concrete next investigation; no fix or deadline promised; artifact backs it"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo-facts: CONTRIBUTING.md has 'no stated AI policy', so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-02",
+      "verdict": "reject",
+      "failed_checks": [
+        "steps-followable",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: bat 0.26.1 (installed via cargo), rustc 1.96.0, Fedora 44 (x86_64), kernel 7.0.11"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "Uses prefix range '18446744073709551614:' instead of the issue's offset-from-end ':-18446744073709551614'; the triggering syntax is absent"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Shows a command run with error output and 'echo $?' result from an actual run"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Artifact is clap \"Invalid value for '--line-range'\" with exit 1; the issue describes a 'capacity overflow' panic with exit 101; the report asserts reproduction and does not note the syntax deviation"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Claims 'I have reproduced the crash locally' but the shown artifact is a different, non-crash failure, so the reproduction claim is unsupported"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo policy: 'no stated AI policy', so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-03",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"ripgrep 15.2.0 (cargo install), Arch Linux (x86_64)\"; notes the issue was filed against 13.0.0"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "test.txt recreated from the issue's 12 lines, then the exact `rg -nU '...' -r '$1' test.txt` command; all public"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Pasted terminal output: 1:fnord / 2:boccob / 3:d321fdddffff / 4:clowns"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Artifact shows wrong line numbers 1,2,3,4, matching the issue's Actual; version deviation (13.0.0 vs 15.2.0) acknowledged; control without -r gives 1,4,7,10"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names the adjacent replaced-match line-number bug and plans to read the standard printer in grep-printer; no fix or deadline promised; reproduction claim backed by the artifact"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Policy forbids AI-written comments but has no disclosure requirement, so the rubric's no-requirement condition applies"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-04",
+      "verdict": "reject",
+      "failed_checks": [
+        "env-recorded",
+        "steps-followable",
+        "evidence-present",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "fail",
+          "evidence": "Repro report names no OS and no fzf version; it only says 'happens for me too'."
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "No steps, command, payload or terminal size given; the report is prose only."
+        },
+        {
+          "name": "evidence-present",
+          "grade": "fail",
+          "evidence": "No output, log or capture shown; it refers to 'the screenshots show' but includes none."
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "No artifact to compare with the issue; it asserts 'exactly the same behavior as described above' with nothing shown."
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Claim is a me-too: '+1 also seeing this!! ... any updates on a fix??' with no investigative intent."
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'standard contribution guide; no stated AI policy', so no disclosure is required."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-05",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: conda 26.7.0 (miniforge3), Python 3.12.7, macOS 15.5 (osx-arm64), libmamba solver."
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Minimal env.yml with a dependencies list plus a category: section, then the full command `conda env update --quiet --json -f env.yml 2>/dev/null`; nothing private."
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Terminal output block shows the EnvironmentSectionNotValid text plus JSON, and a json.tool 'Expecting value: line 1 column 1 (char 1)' failure."
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "The artifact shows the EnvironmentSectionNotValid warning on stdout before the JSON, the same symptom as the issue; Actual matches the artifact."
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Claim names the reproduced behavior on 26.7.0 and the intent to trace where EnvironmentSectionNotValid is emitted; no fix or deadline promised."
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "CONTRIBUTING 'Generative AI' section welcomes AI and requires no disclosure in issue comments."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-06",
+      "verdict": "reject",
+      "failed_checks": [
+        "env-recorded",
+        "steps-followable",
+        "behavior-match"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "fail",
+          "evidence": "Report has no environment section; no OS and no minikube version named anywhere"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "Steps are bare `minikube start` / `minikube tunnel --alsologtostderr`, omitting the issue's `--driver vmware` and `--cleanup`; output shows svc/hello-node patched but no step creates it"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Verbatim log excerpt: 'About to run cmd: route ADD 10.96.0.0 MASK 255.240.0.0 192.168.59.101' / 'error adding route: exit status 1, retrying'"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Loop symptom matches the issue, but the report silently drops the issue's vmware driver and --cleanup flag and does not note the deviation (failure condition b)"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Claim names investigating how the tunnel manager parses `route` output on Windows; no fix or deadline promised; repro artifact is in the package"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'no stated AI policy', so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-07",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"p5.js 1.11.7 (CDN single file), Chrome 139.0 on macOS 14.6\" with language order stated"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "index.html + CDN 1.11.7, sketch with `let value = 0;` in setup, set Japanese first, reload, open console; all public"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Verbatim console output shown for both Japanese-first (TypeError) and English-first (FES message) runs"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Artifact \"TypeError: Cannot read properties of undefined (reading 'replaceAll')\" matches the issue; version deviation (1.11.7 vs 1.9.4/1.10.0) is explicitly noted"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names the reproduced FES translation bug and a concrete next step (translator locale loading vs FES timing); no fix or deadline promised"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Policy allows assistive AI with no disclosure mandate; claim also states \"I used an AI assistant to help me organize this report\""
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-08",
+      "verdict": "reject",
+      "failed_checks": [
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: jq 1.8.2 (Homebrew), macOS 15.5 (arm64)"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Single self-contained command `jq -n 'path({} as {$b} | $b)'`, no private files needed"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Terminal capture of jq compile error shown from an actual run"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Issue: runtime 'Invalid path expression near attempt to access element \"a\" of {}'; artifact: '$b is not defined' compile error from a different expression (`| $b` instead of `| .`), deviation unacknowledged, text claims it confirms the issue"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Claims 'completed a full reproduction and analysis' and compiler-internals understanding, but no artifact in the package reproduces the reported bug and no specific observed behavior is named"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Contribution policy: 'no stated AI policy', so no disclosure required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-09",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: fd 10.4.2 (pacman), Arch Linux (x86_64), kernel 6.15"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Full shell steps from mkdir through fd invocation to cat /tmp/order.log, all public, flags included"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "order.log output ONE/ONE/ONE/TWO/TWO/TWO shown from actual run"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Explicit 'I could NOT reproduce scenario 2' and names differing condition (uniform name lengths, 2 MiB ARG_MAX, no knob to force lower limit)"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Claim names scenario 2 ordering investigation and the acceptance test; no fix/deadline promised"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Policy states no disclosure ask for issue comments; requirement applies only to PRs"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-10",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: starship 1.26.0 (cargo install), zsh 5.9, Ubuntu 24.04 (x86_64)"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Public mkdir/git init/ln -s commands, starship.toml contents and final cd listed; matches the issue's layout and config"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Shows prompt output 'monorepo/packages/app-dir on  master' after cd"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Explicit 'cannot reproduce' naming differing OS, shell and PWD handling; artifact consistent with the stated result"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names the failed repro and a concrete next step (macOS+fish, read contract_repo_path); no promise of fix or deadline"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'no stated AI policy', so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-11",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"Environment: yq 4.53.3 (Homebrew), macOS 15.5 (arm64).\""
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "printf creates some.yml and broken.md, then the issue's exact yq eval load_str command is run; all files public and created inline"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Verbatim terminal output shown for both the \ud83d\udea7 run and the \u2705 control run"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Artifact: longDescription: \"Multiline file containing\\n\\n\\U0001F6A7...\" (double-quoted, \\n escapes) matches the issue's symptom; same version 4.53.3, OS/install differences stated"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Claim names the reproduced behavior and a plan to check whether vendored go-yaml has the yaml/go-yaml#357 fix; no fix or deadline promised"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: \"standard contribution guide; no stated AI policy\", so no disclosure required"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-12",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"prettier 3.9.6 (npm...), Node 22.23.1, macOS 14.6 (arm64)\""
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Empty dir, fresh npm install of prettier@3.9.6, `node repro.mjs` with both calls, ranges and parser stated; inputs are in the public issue"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Output blocks shown for shapes A and B, plus the SyntaxError re-parse message"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Shape A output ends `};);` and shape B ends `};;`, matching the issue's described corruptions; version difference is noted"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names both shapes reproduced on 3.9.6 and a concrete next step tracing the closing boundary from the #12964 fix; no fix or deadline promised"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "AI usage policy has no disclosure requirement (understand/test your code, use templates)"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-13",
+      "verdict": "reject",
+      "failed_checks": [
+        "env-recorded",
+        "steps-followable",
+        "evidence-present",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "fail",
+          "evidence": "Names 'Windows 11' and an RTX 4080 / 64 GB RAM, but never states a Windows Terminal version (issue targets 1.24.11911.0)."
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "No steps or commands; only 'I run long Claude Code sessions on Windows 11 and after a few hours the entire desktop lags'."
+        },
+        {
+          "name": "evidence-present",
+          "grade": "fail",
+          "evidence": "No command output, log, capture or other artifact; entirely assertions ('100% confirm', 'guaranteed reproducible')."
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "No artifact to compare with the issue; asserts 'definitely the DWM bug' without showing a DWM restart recovering performance."
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Me-too reaction ('driving me crazy for months', 'I know exactly what the reporter is talking about') plus 'Assigning myself to this' ownership claim, with no specific reproduced behavior or investigation plan."
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'standard contribution guide with a CLA; no stated AI policy', so no disclosure required."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-14",
+      "verdict": "reject",
+      "failed_checks": [
+        "steps-followable",
+        "evidence-present",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"Environment: zellij 0.44.3 (cargo install), Windows 11 (10.0.26100), Windows Terminal 1.24\""
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "Only \"I created the 3-tab layout file from the issue\"; no layout contents, no `zellij -n <layout>`, no `action dump-screen -p terminal_N` step"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "fail",
+          "evidence": "Only `zellij --version` and `zellij ls` output (setup artifacts); no output from an attempt to trigger the bug, and the screenshot is described, not shown"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Actual: \"the session starts and the tabs are all present\" shows no blank/unresponsive pane, yet the report claims the bug is reproducible; Expected/Actual are inverted"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "\"I have reproduced the dead pane on my machine (evidence below)\" but no artifact in the package shows a dead pane"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: \"standard contribution guide; no stated AI policy\", so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-15",
+      "verdict": "reject",
+      "failed_checks": [
+        "steps-followable",
+        "evidence-present",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"Environment: Joplin 3.7.10, Windows 11.\" names an OS and the tool version"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "The report has no steps; the note-switch trigger sequence is never described"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "fail",
+          "evidence": "No output, log, capture or recording is shown; only assertions like \"I reproduced this bug\""
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "No artifact to compare with the issue's symptom; the text asserts reproduction and a root cause with nothing shown"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Claim says \"already reproduced it and tracked down the root cause\" with no artifact, and promises \"a fix approach\u2026 soon\""
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: \"standard contribution guide; no stated AI policy\", so no disclosure is required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-16",
+      "verdict": "reject",
+      "failed_checks": [
+        "behavior-match"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: pandas 1.5.3 (pip), Python 3.10.12, Ubuntu 22.04 (x86_64)."
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Self-contained public snippet using the issue's exact tuple-name calls: pd.Index([1], name=(1, 2, 3)) then rename_axis((1, 2, 3))."
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Traceback block shown ending in 'ValueError: Length of new names must be 1, got 3'."
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Issue targets latest v3.0.5 and main; report ran pandas 1.5.3 and never notes the version deviation (rubric failure b)."
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names a specific investigation (whether tuple names should be wrapped as scalars in Index.set_names), promises no fix or deadline, and cites the shown artifact."
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo-facts: 'no stated AI policy', so no disclosure is required."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-17",
+      "verdict": "reject",
+      "failed_checks": [
+        "steps-followable",
+        "behavior-match",
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Table names Windows 11 26H2 Build 26300.9032 and Windows Terminal 1.24.11911.0 (Microsoft Store)"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "Step 2 'Downloaded a 256-color test PNG (512x512)' gives no source or file, so the key input is not reproducible by a stranger"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Quotes a real output fragment 'q\"1;1;512;512#0;2;97;97;97#1;2;80;80;78...' (inline, not a code block; mostly paraphrase)"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "fail",
+          "evidence": "Issue describes terminal crash; report says 'The window remained open afterward and the prompt returned' yet claims it matches; Store release tested vs git-main target with no deviation noted"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "Claims 'fully reproduced this sixel crash' and 'confirmed it on the Store release' but no crash artifact exists in the package"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'no stated AI policy', so no disclosure required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-18",
+      "verdict": "reject",
+      "failed_checks": [
+        "steps-followable"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: golangci-lint v1.55.2 (binary release), Go 1.21, macOS 14"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "fail",
+          "evidence": "Steps rely on a private company monorepo and internal .golangci.yml, both stated as not shareable"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Code block with panic output and 'can't run linter goanalysis_metalinter: panic occurred'"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Artifact shows the gomodguard panic and goanalysis_metalinter error the issue describes, on v1.55.2"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names the gomodguard panic; no promised fix, deadline, or exclusive ownership; reproduction backed by the report's artifact"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: 'no stated AI policy'"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-19",
+      "verdict": "reject",
+      "failed_checks": [
+        "claim-specific"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "\"@vue/compiler-sfc 3.6.0-rc.2 via the official SFC playground (Chrome 139, macOS 14.6)\" names OS and tool version"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Starts from the issue's public playground link and recreates the issue's exact style block, which is quoted in the issue"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Playground CSS output pane pasted in a code block"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Output shows `.a,` unscoped while `.b[data-v-7ba5bd90] .c` is scoped, matching the issue's symptom on 3.6.0-rc.2"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "fail",
+          "evidence": "\"I will fix it within 2 days guaranteed\" and \"keep this issue reserved for me\": guaranteed fix, deadline and exclusive ownership"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "pass",
+          "evidence": "Repo facts: \"no stated AI policy\", so no disclosure required"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    },
+    {
+      "id": "pkg-20",
+      "verdict": "reject",
+      "failed_checks": [
+        "ai-disclosure"
+      ],
+      "checks": [
+        {
+          "name": "env-recorded",
+          "grade": "pass",
+          "evidence": "Environment: ghostty 1.3.1 (release build, Fedora 42 RPM), GTK backend, GNOME 48 (Wayland)"
+        },
+        {
+          "name": "steps-followable",
+          "grade": "pass",
+          "evidence": "Public config 'theme = Kitty Default', full launch command with flags, query command, and control config all given"
+        },
+        {
+          "name": "evidence-present",
+          "grade": "pass",
+          "evidence": "Two terminal captures shown: ^[[?997;2n and ^[[?997;1n"
+        },
+        {
+          "name": "behavior-match",
+          "grade": "pass",
+          "evidence": "Single-theme run returns 997;2 despite --window-theme=dark while the conditional pair returns 997;1, matching the issue on 1.3.1"
+        },
+        {
+          "name": "claim-specific",
+          "grade": "pass",
+          "evidence": "Names the wrong mode-2031 report with a non-conditional theme and plans to test the draft patch; no fix or deadline promised"
+        },
+        {
+          "name": "ai-disclosure",
+          "grade": "fail",
+          "evidence": "Policy: 'All AI usage in any form must be disclosed'; neither the claim comment nor the repro report names an AI tool or states that none was used"
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "calibration": false
+    }
+  ]
+}
