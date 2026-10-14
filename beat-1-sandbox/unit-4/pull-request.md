@@ -1,61 +1,37 @@
-# Unit 4 — Test and Submit
-
-Path: `beat-1-sandbox/unit-4/pull-request.md`
-
-Record of the pull request you opened against the Path Review repo, and of the evaluation
-runs that produced `eval-run.txt`. This file is graded at the path above; a copy kept
-anywhere else in the repository is not read.
-
-Complete every labelled field below. Each is graded on its own; content placed under the wrong
-label is not graded.
-
----
+# Unit 4: Test and submit
 
 ## Your pull request
 
 **Pull request**
 
-[Link to the pull request you opened. It must be the pull request's own page on the Path
-Review repo, not your fork's branch page.]
+https://github.com/codepath/pathreview-ai301-fa26-s3/pull/233
 
 **Branch**
 
-[The name of the branch the pull request comes from, exactly as it appears in your fork.
-The naming shape is a type prefix, then the issue number, then a short description. **The
-issue number in the branch name must be the number of the issue the pull request fixes** —
-a name carrying any other number does not satisfy this field.]
+`fix/73-llm-env-guidance`
 
 ## Eval iterations
 
-Answer all four sections. Quote source text directly; paraphrase does not satisfy these
-fields.
-
 **Run history**
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+1. Full run: 16/20. Every category had a match. The misses were pkg-05, pkg-08, pkg-16, and pkg-19.
+2. Partial run: 7/7 on pkg-05, pkg-08, pkg-16, pkg-19 and canaries pkg-01, pkg-03, pkg-04. This was a revision check, not a full score.
+3. Final full run: 20/20. Categories: clear-accept 7/7, not-tested 4/4, silent-drift 4/4, standards-wall 2/2, unreviewable 3/3. This matches the saved eval-run.txt.
+
+I revised the rubric to accept explicit control and formatting results without requiring a transcript for each one. I also distinguished material behavior contradictions from contextual shorthand. The procedure now treats frozen diffs as excerpts and does not infer omitted helper behavior.
 
 **Package analysis**
 
-[Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
-scored). Name it by id, say what your rubric decided and what the gold label said, and
-explain why your rubric read it that way.]
+pkg-19: my initial verdict was reject, while the gold label was accept. My revised and final verdict was accept, matching gold. The package shows the actual issue input before and after. Its diff command prints "IDENTICAL". It also reports "Controls (double-quoted twin; single-quoted without the trailing blank line) unchanged" and "go test ./... passes (4108 tests)." My initial check demanded commands and output for every control. That requirement discounted explicit observed results. The revised check accepts the control report while still requiring evidence on the actual affected artifact. The focused emitter change and regression test match the plan.
 
 **Check rationale**
 
-[Quote one check from the `rubric.md` you uploaded to `tools/pr-precheck/`, exactly as it reads now.
-Then say why it reads that way — what you revised to get there, or what you rejected in
-favour of it.]
+The current check reads exactly:
+
+| Observable verification | Test plan and repro against candidate test evidence | Evidence reports concrete commands, inputs, and observed results from the affected real files or code. A clear reported control result or suite result is evidence even without a full transcript. It demonstrates the changed behavior, or explicitly identifies a bounded unverified shortfall without claiming success. Toy stand-ins, future test promises, and unsupported "works" claims fail. | required |
+
+I revised this check after pkg-19. The main reproduction needs observable evidence from the real artifact. A control result can still be evidence without a full terminal transcript. This rule rejects toy replacements and future promises without rejecting a concise report of actual checks.
 
 **Trade-offs**
 
-[Every check gives something up. Any one of these is a complete answer: a package whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
-
----
-
-Related paths: `eval-run.txt` in this directory; your skill's files in
-`tools/pr-precheck/`.
+Accepting explicit result reports means the skill cannot establish whether someone fabricated a reported control or formatting result. Requiring complete transcripts would not prevent fabrication either. The skill checks consistency and relevance, rather than claiming independent execution. I repeated pkg-01, pkg-03, and pkg-04 as canaries after loosening the checks. All retained their reject verdicts. The final full run also retained both standards-wall rejects and every not-tested reject.
